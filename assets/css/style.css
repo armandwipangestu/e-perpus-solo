@@ -1,0 +1,33 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
+.main-footer {
+	padding: 0px 30px 0px 30px;
+}
+
+@media (min-width: 1199px) {
+	.main-footer {
+		padding: 20px 0px 20px 0px;
+	}
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.hover-scale {
+	transition: transform 0.3s ease-in-out;
+}
+
+.hover-scale:hover {
+	transform: scale(1.1);
+}
