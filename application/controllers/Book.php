@@ -105,4 +105,100 @@ class Book extends CI_Controller
         $publisher = $this->db->get_where('book_publisher', ['id' => $publisherId])->row_array();
         exit(json_encode($publisher));
     }
+
+    public function book_author()
+    {
+        $data['title'] = 'Book Author';
+        $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['book_author'] = $this->db->get('book_author')->result_array();
+
+        $this->form_validation->set_rules('author', 'Author', 'required|is_unique[book_author.author]', [
+            'required' => "Author name can't be empty",
+            'is_unique' => 'A author with the name "' . htmlspecialchars($this->input->post('author')) . '" already exists. Please use another name if you want to add it!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layout/layout_header', $data);
+            $this->load->view('layout/layout_sidebar');
+            $this->load->view('layout/layout_topbar');
+            $this->load->view('book/book_author');
+            $this->load->view('layout/layout_footer');
+        } else {
+            $author = htmlspecialchars($this->input->post('author'));
+            $this->db->insert('book_author', ['author' => $author]);
+
+            $userLogAction = [
+                'user_id' => $this->session->userdata('id_user'),
+                'action' => 'Author "' . $author . '" has been added!',
+            ];
+
+            $this->logaction->insertLog($userLogAction);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">Author "<b>' . $author . '</b>" has been added!</div>');
+            redirect('book/book_author');
+        }
+    }
+
+    public function change_author_by_id()
+    {
+        $data['title'] = 'Book Author';
+        $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['book_author'] = $this->db->get('book_author')->result_array();
+
+        $this->form_validation->set_rules('author', 'Author', 'required|is_unique[book_author.author]', [
+            'required' => "Author name can't be empty",
+            'is_unique' => 'A author with the name "' . htmlspecialchars($this->input->post('author')) . '" already exists. Please use another name if you want to change it!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layout/layout_header', $data);
+            $this->load->view('layout/layout_sidebar');
+            $this->load->view('layout/layout_topbar');
+            $this->load->view('book/book_author');
+            $this->load->view('layout/layout_footer');
+        } else {
+            $id = htmlspecialchars($this->input->post('id'));
+            $author = htmlspecialchars($this->input->post('author'));
+            $authorBefore = $this->db->get_where('book_author', ['id' => $id])->row_array();
+
+            $this->db->where('id', $id);
+            $this->db->update('book_author', ['author' => $author]);
+
+            $userLogAction = [
+                'user_id' => $this->session->userdata('id_user'),
+                'action' => 'Author "' . $authorBefore['author'] . '" has been change to "' . $author . '"!',
+            ];
+
+            $this->logaction->insertLog($userLogAction);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">Author "<b>' . $authorBefore['author'] . '</b>" has been change to "<b>' . $author . '</b>"!</div>');
+            redirect('book/book_author');
+        }
+    }
+
+    public function delete_author_by_id()
+    {
+        $id = $this->uri->segment(3);
+        $authorName = $this->db->get_where('book_author', ['id' => $id])->row_array()['author'];
+        $this->db->where('id', $id);
+        $this->db->delete('book_author');
+
+        $userLogAction = [
+            'user_id' => $this->session->userdata('id_user'),
+            'action' => 'Author "' . $authorName . '" has been deleted!',
+        ];
+
+        $this->logaction->insertLog($userLogAction);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">Author "<b>' . $authorName . '</b>" has been deleted!</div>');
+        redirect('book/book_author');
+    }
+
+    public function get_author_by_id($authorId)
+    {
+        $author = $this->db->get_where('book_author', ['id' => $authorId])->row_array();
+        exit(json_encode($author));
+    }
 }
