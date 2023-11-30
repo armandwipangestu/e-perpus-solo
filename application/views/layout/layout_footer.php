@@ -32,6 +32,10 @@
 <!-- jQuery -->
 <script src="<?= base_url(); ?>assets/js/jquery/jquery-3.7.1.min.js"></script>
 
+<!-- Flatpickr -->
+<script src="<?= base_url(); ?>template/mazer/dist/assets/extensions/flatpickr/flatpickr.min.js"></script>
+<script src="<?= base_url(); ?>template/mazer/dist/assets/static/js/pages/date-picker.js"></script>
+
 <!-- Custom JS -->
 <script src="<?= base_url(); ?>assets/js/script.js"></script>
 
