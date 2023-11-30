@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-menu">
+        <div class="sidebar-menu" style="margin-bottom: 50px;">
             <ul class="menu">
                 <!-- Get Menu By Role User Login -->
                 <?php

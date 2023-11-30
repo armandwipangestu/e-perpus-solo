@@ -37,7 +37,6 @@ logout.addEventListener("click", function () {
 function previewImage() {
 	const image = document.querySelector(".image-preview");
 	const imgPreview = document.querySelector(".img-preview");
-	// console.log(imgPreview);
 
 	const oFReader = new FileReader();
 	oFReader.readAsDataURL(image.files[0]);
