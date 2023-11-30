@@ -7,6 +7,7 @@ class Book extends CI_Controller
     {
         parent::__construct();
         _checkIsLogin();
+        $this->load->model('Book_model', 'book');
         $this->load->model('LogAction_model', 'logaction');
     }
 
@@ -200,5 +201,268 @@ class Book extends CI_Controller
     {
         $author = $this->db->get_where('book_author', ['id' => $authorId])->row_array();
         exit(json_encode($author));
+    }
+
+    public function book_data()
+    {
+        $data['title'] = 'Book Data';
+        $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['book_data'] = $this->book->getAllBook();
+        $data['publisher'] = $this->db->get('book_publisher')->result_array();
+        $data['author'] = $this->db->get('book_author')->result_array();
+
+        // Title Field
+        $this->form_validation->set_rules('title', 'Title', 'required', [
+            'required' => "Title name can't be empty",
+        ]);
+
+        // Synopsis Field
+        $this->form_validation->set_rules('synopsis', 'Synopsis', 'required', [
+            'required' => "Synopsis can't be empty",
+        ]);
+
+        // Language Field
+        $this->form_validation->set_rules('language', 'Language', 'required', [
+            'required' => "Language can't be empty",
+        ]);
+
+        // Publish Date Field
+        $this->form_validation->set_rules('publish_date', 'Publish Date', 'required', [
+            'required' => "Publish Date can't be empty",
+        ]);
+
+        // Total Page Field
+        $this->form_validation->set_rules('total_page', 'Total Page', 'required', [
+            'required' => "Total Page can't be empty",
+        ]);
+
+        // Quantity Available Field
+        $this->form_validation->set_rules('quantity_available', 'Quantity Available', 'required', [
+            'required' => "Quantity Available can't be empty",
+        ]);
+
+        // Publisher Field
+        $this->form_validation->set_rules('publisher_id', 'Publisher', 'required', [
+            'required' => "Publisher can't be empty",
+        ]);
+
+        // Author Field
+        $this->form_validation->set_rules('author_id', 'Author', 'required', [
+            'required' => "Author can't be empty",
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layout/layout_header', $data);
+            $this->load->view('layout/layout_sidebar');
+            $this->load->view('layout/layout_topbar');
+            $this->load->view('book/book_data');
+            $this->load->view('layout/layout_footer');
+        } else {
+            $data = [
+                'title' => htmlspecialchars($this->input->post('title', true)),
+                'synopsis' => htmlspecialchars($this->input->post('synopsis', true)),
+                'language' => htmlspecialchars($this->input->post('language', true)),
+                'publish_date' => htmlspecialchars($this->input->post('publish_date', true)),
+                'total_page' => htmlspecialchars($this->input->post('total_page', true)),
+                'quantity_available' => htmlspecialchars($this->input->post('quantity_available', true)),
+                'publisher_id' => htmlspecialchars($this->input->post('publisher_id', true)),
+                'author_id' => htmlspecialchars($this->input->post('author_id', true)),
+            ];
+
+            // Check if there are images to be uploaded
+            $upload_image = $_FILES['cover_image']['name'];
+
+            if ($upload_image) {
+                $config['allowed_types'] = 'jpg|png|webp';
+                $config['max_size'] = '2048';
+                $config['upload_path'] = './assets/img/cover_image/';
+
+                // Get extension file
+                $file_ext = pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION);
+
+                // Create unique file name with uniqid() function and concate with extension name
+                $unique_filename = uniqid() . '_' . time() . '.' . $file_ext;
+
+                $config['file_name'] = $unique_filename;
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('cover_image')) {
+                    $new_cover_image = $this->upload->data('file_name');
+                    $this->db->set('cover_image', $new_cover_image);
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            } else {
+                $data += ['cover_image' => 'default_cover.jpg'];
+            }
+
+
+            $this->db->insert('book_data', $data);
+
+            $userLogAction = [
+                'user_id' => $this->session->userdata('id_user'),
+                'action' => 'A new book "' . $data['title'] . '" has been added!',
+            ];
+
+            $this->logaction->insertLog($userLogAction);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">A new book "<b>' . $data['title'] . '</b>" has been added</div>');
+            redirect('book/book_data');
+        }
+    }
+
+    public function change_book_data_by_id()
+    {
+        $data['title'] = 'Book Data';
+        $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['book_data'] = $this->book->getAllBook();
+        $data['publisher'] = $this->db->get('book_publisher')->result_array();
+        $data['author'] = $this->db->get('book_author')->result_array();
+
+        // Title Field
+        $this->form_validation->set_rules('title', 'Title', 'required', [
+            'required' => "Title name can't be empty",
+        ]);
+
+        // Synopsis Field
+        $this->form_validation->set_rules('synopsis', 'Synopsis', 'required', [
+            'required' => "Synopsis can't be empty",
+        ]);
+
+        // Language Field
+        $this->form_validation->set_rules('language', 'Language', 'required', [
+            'required' => "Language can't be empty",
+        ]);
+
+        // Publish Date Field
+        $this->form_validation->set_rules('publish_date', 'Publish Date', 'required', [
+            'required' => "Publish Date can't be empty",
+        ]);
+
+        // Total Page Field
+        $this->form_validation->set_rules('total_page', 'Total Page', 'required', [
+            'required' => "Total Page can't be empty",
+        ]);
+
+        // Quantity Available Field
+        $this->form_validation->set_rules('quantity_available', 'Quantity Available', 'required', [
+            'required' => "Quantity Available can't be empty",
+        ]);
+
+        // Publisher Field
+        $this->form_validation->set_rules('publisher_id', 'Publisher', 'required', [
+            'required' => "Publisher can't be empty",
+        ]);
+
+        // Author Field
+        $this->form_validation->set_rules('author_id', 'Author', 'required', [
+            'required' => "Author can't be empty",
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layout/layout_header', $data);
+            $this->load->view('layout/layout_sidebar');
+            $this->load->view('layout/layout_topbar');
+            $this->load->view('book/book_data');
+            $this->load->view('layout/layout_footer');
+        } else {
+            $data = [
+                'title' => htmlspecialchars($this->input->post('title', true)),
+                'synopsis' => htmlspecialchars($this->input->post('synopsis', true)),
+                'language' => htmlspecialchars($this->input->post('language', true)),
+                'publish_date' => htmlspecialchars($this->input->post('publish_date', true)),
+                'total_page' => htmlspecialchars($this->input->post('total_page', true)),
+                'quantity_available' => htmlspecialchars($this->input->post('quantity_available', true)),
+                'publisher_id' => htmlspecialchars($this->input->post('publisher_id', true)),
+                'author_id' => htmlspecialchars($this->input->post('author_id', true)),
+            ];
+
+            // Check if there are images to be uploaded
+            $upload_image = $_FILES['cover_image']['name'];
+
+            if ($upload_image) {
+                $config['allowed_types'] = 'jpg|png|webp';
+                $config['max_size'] = '2048';
+                $config['upload_path'] = './assets/img/cover_image/';
+
+                // Get extension file
+                $file_ext = pathinfo($_FILES['cover_image']['name'], PATHINFO_EXTENSION);
+
+                // Create unique file name with uniqid() function and concate with extension name
+                $unique_filename = uniqid() . '_' . time() . '.' . $file_ext;
+
+                $config['file_name'] = $unique_filename;
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('cover_image')) {
+                    $old_cover_image = $this->db->get_where("book_data", ['id' => htmlspecialchars($this->input->post('id'))])->row_array()['cover_image'];
+                    if ($old_cover_image != "default_cover.jpg") {
+                        unlink(FCPATH . 'assets/img/cover_image/' . $old_cover_image);
+                    }
+                    $new_cover_image = $this->upload->data('file_name');
+                    $this->db->set('cover_image', $new_cover_image);
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $titleBefore = $this->db->get_where('book_data', ['id' => htmlspecialchars($this->input->post('id'))])->row_array()['title'];
+
+            if ($titleBefore != $data['title']) {
+                $messageAction = 'Book "' . $titleBefore . '" has been change to "' . $data['title'] . '"!';
+            } else {
+                $messageAction = 'Book "' . $data['title'] . '" has been upadted!';
+            }
+
+            $this->db->where('id', htmlspecialchars($this->input->post('id', true)));
+            $this->db->update('book_data', $data);
+
+            $userLogAction = [
+                'user_id' => $this->session->userdata('id_user'),
+                'action' => $messageAction,
+            ];
+
+            $this->logaction->insertLog($userLogAction);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">' . $messageAction . '</div>');
+            redirect('book/book_data');
+        }
+    }
+
+    public function get_book_by_id()
+    {
+        $id = $this->uri->segment(3);
+        $book = $this->book->getBookById($id);
+
+        exit(json_encode($book));
+    }
+
+    public function delete_book_by_id()
+    {
+        $id = $this->uri->segment(3);
+        $cover_image = $this->db->get_where('book_data', ['id' => $id])->row_array()['cover_image'];
+
+        if ($cover_image != "default_cover.jpg") {
+            unlink(FCPATH . 'assets/img/cover_image/' . $cover_image);
+        }
+
+        $usernameAdmin = $this->db->get_where('user_data', ['id' => $this->session->userdata('id_user')])->row_array()['username'];
+        $bookTitle = $this->db->get_where('book_data', ['id' => $id])->row_array()['title'];
+
+        $userLogAction = [
+            'user_id' => $this->session->userdata('id_user'),
+            'action' => 'Admin "' . $usernameAdmin . '" has been deleted book data "' . $bookTitle . '"!',
+        ];
+
+        $this->logaction->insertLog($userLogAction);
+
+        $this->db->delete('book_data', ['id' => $id]);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success ml-4 mr-4">Book <b>"' . $bookTitle . '" has been deleted!</div>');
+        redirect('book/book_data');
     }
 }
