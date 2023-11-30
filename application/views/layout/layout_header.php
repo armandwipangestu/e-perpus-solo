@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="<?= base_url(); ?>template/mazer/dist/assets/extensions/@icon/dripicons/dripicons.css">
     <link rel="stylesheet" href="<?= base_url(); ?>template/mazer/dist//assets/compiled/css/ui-icons-dripicons.css">
 
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="<?= base_url(); ?>template/mazer/dist/assets/extensions/flatpickr/flatpickr.min.css">
+
     <script src="<?= base_url(); ?>template/mazer/dist/assets/static/js/initTheme.js"></script>
 </head>
 

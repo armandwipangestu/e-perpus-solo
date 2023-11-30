@@ -43,3 +43,9 @@ assets/img/avatar_image/*
 !assets/img/avatar_image/default_male.jpg
 !assets/img/avatar_image/default_female_old.png
 !assets/img/avatar_image/default_male_old.png
+
+# Ignore all files in the img/cover_image directory
+assets/img/cover_image/*
+
+# Include specific image files
+!assets/img/cover_image/default_cover.jpg

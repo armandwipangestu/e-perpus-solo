@@ -31,3 +31,13 @@ input[type="number"] {
 .hover-scale:hover {
 	transform: scale(1.1);
 }
+
+.cover-image {
+	width: 200px !important;
+	height: 300px !important;
+}
+
+.cover-image2 {
+	width: 100px !important;
+	height: 150px !important;
+}
