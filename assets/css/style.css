@@ -41,3 +41,39 @@ input[type="number"] {
 	width: 100px !important;
 	height: 150px !important;
 }
+
+#carouselTrendingBooks {
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.carousel-control {
+	width: 30px !important;
+	height: 50px !important;
+}
+
+.carousel-control.left {
+	margin-left: -45px;
+	color: #898989 !important;
+}
+
+.carousel-control.right {
+	margin-right: -45px;
+	color: #898989 !important;
+}
+
+.carousel-control-next {
+	width: 30px !important;
+	height: 50px !important;
+	margin: auto 0;
+	right: 25px !important;
+	color: #898989 !important;
+}
+
+.carousel-control-prev {
+	width: 30px !important;
+	height: 50px !important;
+	margin: auto 0;
+	left: 25px !important;
+	color: #898989 !important;
+}
