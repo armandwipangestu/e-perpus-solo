@@ -62,7 +62,7 @@ class Auth extends CI_Controller
                     redirect('admin');
                 }
                 if ($user['role_id'] == 2) {
-                    redirect('user');
+                    redirect('member/list_book');
                 }
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-warning ml-4 mr-4">The password you entered is incorrect</div>');
