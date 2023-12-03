@@ -211,6 +211,7 @@ class Book extends CI_Controller
         $data['book_data'] = $this->book->getAllBook();
         $data['publisher'] = $this->db->get('book_publisher')->result_array();
         $data['author'] = $this->db->get('book_author')->result_array();
+        $data['category'] = $this->db->get('book_category')->result_array();
 
         // Title Field
         $this->form_validation->set_rules('title', 'Title', 'required', [
@@ -252,6 +253,11 @@ class Book extends CI_Controller
             'required' => "Author can't be empty",
         ]);
 
+        // Category Field
+        $this->form_validation->set_rules('category_id', 'Category', 'required', [
+            'required' => "Category can't be empty",
+        ]);
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('layout/layout_header', $data);
             $this->load->view('layout/layout_sidebar');
@@ -268,6 +274,7 @@ class Book extends CI_Controller
                 'quantity_available' => htmlspecialchars($this->input->post('quantity_available', true)),
                 'publisher_id' => htmlspecialchars($this->input->post('publisher_id', true)),
                 'author_id' => htmlspecialchars($this->input->post('author_id', true)),
+                'category_id' => htmlspecialchars($this->input->post('category_id', true))
             ];
 
             // Check if there are images to be uploaded
@@ -321,6 +328,7 @@ class Book extends CI_Controller
         $data['book_data'] = $this->book->getAllBook();
         $data['publisher'] = $this->db->get('book_publisher')->result_array();
         $data['author'] = $this->db->get('book_author')->result_array();
+        $data['category'] = $this->db->get('book_category')->result_array();
 
         // Title Field
         $this->form_validation->set_rules('title', 'Title', 'required', [
@@ -362,6 +370,11 @@ class Book extends CI_Controller
             'required' => "Author can't be empty",
         ]);
 
+        // Category Field
+        $this->form_validation->set_rules('category_id', 'Category', 'required', [
+            'required' => "Category can't be empty",
+        ]);
+
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('layout/layout_header', $data);
             $this->load->view('layout/layout_sidebar');
@@ -378,6 +391,7 @@ class Book extends CI_Controller
                 'quantity_available' => htmlspecialchars($this->input->post('quantity_available', true)),
                 'publisher_id' => htmlspecialchars($this->input->post('publisher_id', true)),
                 'author_id' => htmlspecialchars($this->input->post('author_id', true)),
+                'category_id' => htmlspecialchars($this->input->post('category_id', true))
             ];
 
             // Check if there are images to be uploaded
@@ -464,5 +478,101 @@ class Book extends CI_Controller
 
         $this->session->set_flashdata('message', '<div class="alert alert-success ml-4 mr-4">Book <b>"' . $bookTitle . '" has been deleted!</div>');
         redirect('book/book_data');
+    }
+
+    public function book_category()
+    {
+        $data['title'] = 'Book Category';
+        $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['book_category'] = $this->db->get('book_category')->result_array();
+
+        $this->form_validation->set_rules('category', 'Category', 'required|is_unique[book_category.category]', [
+            'required' => "Category name can't be empty",
+            'is_unique' => 'A category with the name "' . htmlspecialchars($this->input->post('category')) . '" already exists. Please use another name if you want to add it!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layout/layout_header', $data);
+            $this->load->view('layout/layout_sidebar');
+            $this->load->view('layout/layout_topbar');
+            $this->load->view('book/book_category');
+            $this->load->view('layout/layout_footer');
+        } else {
+            $category = htmlspecialchars($this->input->post('category'));
+            $this->db->insert('book_category', ['category' => $category]);
+
+            $userLogAction = [
+                'user_id' => $this->session->userdata('id_user'),
+                'action' => 'Category "' . $category . '" has been added!',
+            ];
+
+            $this->logaction->insertLog($userLogAction);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">Category "<b>' . $category . '</b>" has been added!</div>');
+            redirect('book/book_category');
+        }
+    }
+
+    public function change_category_by_id()
+    {
+        $data['title'] = 'Book Category';
+        $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data['book_category'] = $this->db->get('book_category')->result_array();
+
+        $this->form_validation->set_rules('category', 'Category', 'required|is_unique[book_category.category]', [
+            'required' => "Category name can't be empty",
+            'is_unique' => 'A category with the name "' . htmlspecialchars($this->input->post('category')) . '" already exists. Please use another name if you want to change it!'
+        ]);
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('layout/layout_header', $data);
+            $this->load->view('layout/layout_sidebar');
+            $this->load->view('layout/layout_topbar');
+            $this->load->view('book/book_category');
+            $this->load->view('layout/layout_footer');
+        } else {
+            $id = htmlspecialchars($this->input->post('id'));
+            $category = htmlspecialchars($this->input->post('category'));
+            $categoryBefore = $this->db->get_where('book_category', ['id' => $id])->row_array();
+
+            $this->db->where('id', $id);
+            $this->db->update('book_category', ['category' => $category]);
+
+            $userLogAction = [
+                'user_id' => $this->session->userdata('id_user'),
+                'action' => 'Category "' . $categoryBefore['category'] . '" has been change to "' . $category . '"!',
+            ];
+
+            $this->logaction->insertLog($userLogAction);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">Category "<b>' . $categoryBefore['category'] . '</b>" has been change to "<b>' . $category . '</b>"!</div>');
+            redirect('book/book_category');
+        }
+    }
+
+    public function delete_category_by_id()
+    {
+        $id = $this->uri->segment(3);
+        $categoryName = $this->db->get_where('book_category', ['id' => $id])->row_array()['category'];
+        $this->db->where('id', $id);
+        $this->db->delete('book_category');
+
+        $userLogAction = [
+            'user_id' => $this->session->userdata('id_user'),
+            'action' => 'Category "' . $categoryName . '" has been deleted!',
+        ];
+
+        $this->logaction->insertLog($userLogAction);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success mb-4">Category "<b>' . $categoryName . '</b>" has been deleted!</div>');
+        redirect('book/book_category');
+    }
+
+    public function get_category_by_id($categoryId)
+    {
+        $category = $this->db->get_where('book_category', ['id' => $categoryId])->row_array();
+        exit(json_encode($category));
     }
 }

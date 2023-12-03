@@ -29,6 +29,7 @@
                             <th scope="col">Quantity Available</th>
                             <th scope="col">Publisher</th>
                             <th scope="col">Author</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Created At</th>
                             <th scope="col">Updated At</th>
                             <th scope="col">Action</th>
@@ -76,6 +77,9 @@
                                 </td>
                                 <td class="col-auto">
                                     <p class="font-bold mb-0"><?= $bd['author']; ?></p>
+                                </td>
+                                <td class="col-auto">
+                                    <p class="font-bold mb-0"><?= $bd['category']; ?></p>
                                 </td>
                                 <td class="col-auto">
                                     <p class="font-bold mb-0"><?= (new DateTime($bd['created_at']))->format('l, j F Y H:m:s'); ?></p>
@@ -190,6 +194,17 @@
                             </select>
                         </div>
 
+                        <!-- Category Field -->
+                        <div class="form-group">
+                            <label for="category_id">Category</label>
+                            <select name="category_id" id="category_id" class="form-select form-control">
+                                <option value="">Select Category</option>
+                                <?php foreach ($category as $c) : ?>
+                                    <option value="<?= $c['id']; ?>"><?= $c['category']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
                         <div class=" form-group float-end mt-2">
                             <button type="submit" class="btn btn-success">Save</button>
                         </div>
@@ -286,6 +301,14 @@
                             </select>
                         </div>
 
+                        <!-- Category Field -->
+                        <div class="form-group">
+                            <label for="change_category">Category</label>
+                            <select name="category_id" id="change_category" class="form-select form-control">
+                                <option value="" id="select_category"></option>
+                            </select>
+                        </div>
+
                         <div class=" form-group float-end mt-2">
                             <button type="submit" class="btn btn-success">Save</button>
                         </div>
@@ -377,6 +400,27 @@
                     opt.value = author.id
                     opt.innerHTML = author.author
                     changeAuthor.appendChild(opt);
+                }
+            })
+
+            // Category Field
+            $('#select_category').val(book.category_id);
+            $('#select_category').text(book.category);
+
+            const changeCategory = document.querySelector('#change_category');
+            const options3 = Array.from(changeCategory.options);
+            options3.forEach((option) => {
+                if (option.id !== 'select_category') {
+                    changeCategory.removeChild(option);
+                }
+            })
+
+            book.categorys.map((category) => {
+                if (book.category !== category.category) {
+                    const opt = document.createElement('option')
+                    opt.value = category.id
+                    opt.innerHTML = category.category
+                    changeCategory.appendChild(opt);
                 }
             })
 
