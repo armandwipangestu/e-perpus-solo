@@ -49,4 +49,50 @@ class Book_model extends CI_Model
 
         return $book;
     }
+
+    public function getBookRecentlyAdded()
+    {
+        $query = "
+            SELECT `bd`.*, `bp`.`publisher`, `ba`.`author`, `bc`.`category` 
+            FROM `book_data` AS bd
+            JOIN `book_publisher` AS bp
+                ON `bd`.`publisher_id` = `bp`.`id`
+            JOIN `book_author` AS ba
+                ON `bd`.`author_id` = `ba`.`id`
+            JOIN `book_category` AS bc
+                ON `bd`.`category_id` = `bc`.`id`
+            ORDER BY bd.created_at DESC
+            LIMIT 10
+        ";
+
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getBookByCategory($category)
+    {
+        $query = "
+            SELECT `bd`.*, `bp`.`publisher`, `ba`.`author`, `bc`.`category` 
+            FROM `book_data` AS bd
+            JOIN `book_publisher` AS bp
+                ON `bd`.`publisher_id` = `bp`.`id`
+            JOIN `book_author` AS ba
+                ON `bd`.`author_id` = `ba`.`id`
+            JOIN `book_category` AS bc
+                ON `bd`.`category_id` = `bc`.`id`
+            WHERE `bc`.`category` LIKE '$category'
+        ";
+
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllCategories()
+    {
+        $this->db->select('category');
+        $this->db->distinct();
+        $result = $this->db->get('book_category')->result_array();
+
+        $categories = array_column($result, 'category');
+
+        return $categories;
+    }
 }

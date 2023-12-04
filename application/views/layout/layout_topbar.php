@@ -86,6 +86,11 @@
                                             $text = 'Role';
                                         }
 
+                                        if ($url == "/member/book") {
+                                            $url = '/member/list_book';
+                                            $text = 'List Book';
+                                        }
+
                                         if ($key === array_key_last($segments)) :
                                         ?>
                                             <li class="breadcrumb-item ative" aria-current="page"><?= $text; ?></li>
