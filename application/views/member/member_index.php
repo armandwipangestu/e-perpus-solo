@@ -72,7 +72,7 @@
                             <div class="row">
                                 <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                     <div class="stats-icon red mb-2">
-                                        <i class="bi bi-book d-flex justify-content-center pb-4"></i>
+                                        <i class="fas fa-fw fa-money-bill"></i>
                                     </div>
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
