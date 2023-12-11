@@ -38,6 +38,7 @@ class Operator extends CI_Controller
         $data['total_role'] = $this->db->from('user_role')->count_all_results();
         $data['total_publisher'] = $this->db->from('book_publisher')->count_all_results();
         $data['total_author'] = $this->db->from('book_author')->count_all_results();
+        $data['total_category'] = $this->db->from('book_category')->count_all_results();
         $data['total_book'] = $this->db->from('book_data')->count_all_results();
         $data['total_log'] = $this->db->from('user_log_action')->count_all_results();
         $data['user_registration'] = json_encode($this->admin->getUserRegistration());
