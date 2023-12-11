@@ -13,7 +13,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title">List User</h5>
-            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddNewUser">Add New User</a>
+            <!-- <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddNewUser">Add New User</a> -->
         </div>
         <div class="card-body">
             <div class="table-responsive">

@@ -129,7 +129,7 @@
                             <p class="text-small role-date"></p>
                             <ul class="text-small text-muted mt-3">
                                 <li>Max upload file: <b>2MB</b></li>
-                                <li>Allowed extension: <b>JPG, PNG and WEBP</b></li>
+                                <li>Allowed extension: <b>JPG, JPEG, PNG and WEBP</b></li>
                             </ul>
                         </div>
                     </div>
@@ -241,7 +241,7 @@
                             <p class="text-small role-date"></p>
                             <ul class="text-small text-muted mt-3">
                                 <li>Max upload file: <b>2MB</b></li>
-                                <li>Allowed extension: <b>JPG, PNG and WEBP</b></li>
+                                <li>Allowed extension: <b>JPG, JPEG, PNG and WEBP</b></li>
                             </ul>
                         </div>
                     </div>

@@ -40,6 +40,13 @@
                             <div class="col-lg-3 col-sm-6 border">
                                 <div class="p-3">
                                     <p class="text-bold">
+                                        Category: <span class="text-muted"><?= $book['category']; ?></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 border">
+                                <div class="p-3">
+                                    <p class="text-bold">
                                         Language: <span class="text-muted"><?= $book['language']; ?></span>
                                     </p>
                                 </div>

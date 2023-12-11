@@ -95,4 +95,85 @@ class Book_model extends CI_Model
 
         return $categories;
     }
+
+    public function getListBorrowByUser($userId)
+    {
+        $query = "SELECT
+            `tb`.`id`, `bd`.`cover_image`, `bd`.`title`,
+            `tb`.`quantity`, `tb`.`borrow_date`, `tb`.`return_date`,
+            `st`.`status`, `ud`.`id` AS user_id
+            FROM `transaction_borrow` AS tb
+            JOIN `book_data` AS bd
+                ON `tb`.`book_id` = `bd`.`id`
+            JOIN `status` AS st
+                ON `tb`.`status_id` = `st`.`id`
+            JOIN `user_data` AS ud
+                ON `tb`.`user_id` = `ud`.`id`
+            WHERE `ud`.`id` = $userId
+        ";
+
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllListRequestBorrow()
+    {
+        $query = "SELECT
+            `tb`.`id`, `bd`.`cover_image`, `bd`.`title`,
+            `tb`.`quantity`, `tb`.`borrow_date`, `tb`.`return_date`,
+            `st`.`status`, `ud`.`id` AS user_id, `ud`.`first_name`, 
+            `ud`.`last_name`, `ud`.`avatar_image`
+            FROM `transaction_borrow` AS tb
+            JOIN `book_data` AS bd
+                ON `tb`.`book_id` = `bd`.`id`
+            JOIN `status` AS st
+                ON `tb`.`status_id` = `st`.`id`
+            JOIN `user_data` AS ud
+                ON `tb`.`user_id` = `ud`.`id`
+        ";
+
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getListReturnByUser($userId)
+    {
+        $query = "SELECT
+            `tr`.`id`, `bd`.`cover_image`, `bd`.`title`,
+            `tb`.`quantity`, `tb`.`borrow_date`, `tb`.`return_date`,
+            `st`.`status`, `tr`.`fine_amount`, `tr`.`message`,
+            `ud`.`id` AS user_id
+            FROM transaction_return AS tr
+            JOIN transaction_borrow AS tb
+                ON `tr`.`borrow_id` = `tb`.`id`
+            JOIN `book_data` AS bd
+                ON `tb`.`book_id` = `bd`.`id`
+            JOIN `status` AS st
+                ON `tr`.`status_id` = `st`.`id`
+            JOIN `user_data` AS ud
+                ON `tb`.`user_id` = `ud`.`id`
+            WHERE `ud`.`id` = $userId
+        ";
+
+        return $this->db->query($query)->result_array();
+    }
+
+    public function getAllListRequestReturn()
+    {
+        $query = "SELECT
+            `tr`.`id`, `bd`.`id` AS book_id, `bd`.`cover_image`, `bd`.`title`,
+            `tb`.`quantity`, `tb`.`borrow_date`, `tb`.`return_date` AS `request_return_date`,
+            `tr`.`return_date`, `st`.`status`, `tr`.`fine_amount`, `tr`.`message`, `ud`.`id` AS user_id,
+            `ud`.`first_name`, `ud`.`last_name`, `ud`.`avatar_image`
+            FROM transaction_return AS tr
+            JOIN transaction_borrow AS tb
+                ON `tr`.`borrow_id` = `tb`.`id`
+            JOIN `book_data` AS bd
+                ON `tb`.`book_id` = `bd`.`id`
+            JOIN `status` AS st
+                ON `tr`.`status_id` = `st`.`id`
+            JOIN `user_data` AS ud
+                ON `tb`.`user_id` = `ud`.`id`
+        ";
+
+        return $this->db->query($query)->result_array();
+    }
 }
