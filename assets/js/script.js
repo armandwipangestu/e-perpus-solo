@@ -1,3 +1,14 @@
+// | -------------------------------------------------------------------
+// | E-PERPUS-SOLO
+// | -------------------------------------------------------------------
+// | An open source library management system application with framework
+// | CodeIgniter version 3.1.13
+// |
+// | Copyright (c) 2023, Arman Dwi Pangestu
+// |
+// | GitHub: https://github.com/armandwipangestu/e-perpus-solo
+// |
+
 // Disable char e, +, - on input element with type number
 
 const inputNumber = document.querySelectorAll('input[type="number"]');

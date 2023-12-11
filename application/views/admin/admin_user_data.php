@@ -1,3 +1,16 @@
+<!-- /*
+| -------------------------------------------------------------------
+| E-PERPUS-SOLO
+| -------------------------------------------------------------------
+| An open source library management system application with framework
+| CodeIgniter version 3.1.13
+|
+| Copyright (c) 2023, Arman Dwi Pangestu
+|
+| GitHub: https://github.com/armandwipangestu/e-perpus-solo
+|
+*/ -->
+
 <?= $this->session->flashdata('message') ?>
 <?= form_error('first_name', '<div class="alert alert-danger mb-4">', '</div>'); ?>
 <?= form_error('last_name', '<div class="alert alert-danger mb-4">', '</div>'); ?>

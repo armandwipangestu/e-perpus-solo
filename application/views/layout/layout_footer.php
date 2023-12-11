@@ -1,3 +1,16 @@
+<!-- /*
+| -------------------------------------------------------------------
+| E-PERPUS-SOLO
+| -------------------------------------------------------------------
+| An open source library management system application with framework
+| CodeIgniter version 3.1.13
+|
+| Copyright (c) 2023, Arman Dwi Pangestu
+|
+| GitHub: https://github.com/armandwipangestu/e-perpus-solo
+|
+*/ -->
+
 </div>
 <footer class="main-footer">
     <div class="footer clearfix mb-0 text-muted">

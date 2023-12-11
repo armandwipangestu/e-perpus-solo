@@ -1,6 +1,19 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+/*
+| -------------------------------------------------------------------
+| E-PERPUS-SOLO
+| -------------------------------------------------------------------
+| An open source library management system application with framework
+| CodeIgniter version 3.1.13
+|
+| Copyright (c) 2023, Arman Dwi Pangestu
+|
+| GitHub: https://github.com/armandwipangestu/e-perpus-solo
+|
+*/
+
 class Submenu extends CI_Controller
 {
     public function __construct()
