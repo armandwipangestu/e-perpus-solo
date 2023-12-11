@@ -31,12 +31,12 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user_data', ['email' => $this->session->userdata('email')])->row_array();
         $data['total_account'] = $this->db->from('user_data')->count_all_results();
         $data['total_admin'] = $this->admin->getTotalByRole("Administrator")['total'];
+        $data['total_operator'] = $this->admin->getTotalByRole("Operator")['total'];
         $data['total_user'] = $this->admin->getTotalByRole("User")['total'];
         $data['total_role'] = $this->db->from('user_role')->count_all_results();
         $data['total_publisher'] = $this->db->from('book_publisher')->count_all_results();
         $data['total_author'] = $this->db->from('book_author')->count_all_results();
         $data['total_book'] = $this->db->from('book_data')->count_all_results();
-        $data['total_log'] = $this->db->from('user_log_action')->count_all_results();
         $data['user_registration'] = json_encode($this->admin->getUserRegistration());
         $data['book_registration'] = json_encode($this->admin->getBookRegistration());
         $data['recent_users'] = $this->admin->getRecentUsers();
