@@ -281,7 +281,7 @@ class Book extends CI_Controller
             $upload_image = $_FILES['cover_image']['name'];
 
             if ($upload_image) {
-                $config['allowed_types'] = 'jpg|png|webp';
+                $config['allowed_types'] = 'jpg|png|webp|jpeg';
                 $config['max_size'] = '2048';
                 $config['upload_path'] = './assets/img/cover_image/';
 
@@ -398,7 +398,7 @@ class Book extends CI_Controller
             $upload_image = $_FILES['cover_image']['name'];
 
             if ($upload_image) {
-                $config['allowed_types'] = 'jpg|png|webp';
+                $config['allowed_types'] = 'jpg|png|webp|jpeg';
                 $config['max_size'] = '2048';
                 $config['upload_path'] = './assets/img/cover_image/';
 
@@ -464,12 +464,12 @@ class Book extends CI_Controller
             unlink(FCPATH . 'assets/img/cover_image/' . $cover_image);
         }
 
-        $usernameAdmin = $this->db->get_where('user_data', ['id' => $this->session->userdata('id_user')])->row_array()['username'];
+        $usernameOperator = $this->db->get_where('user_data', ['id' => $this->session->userdata('id_user')])->row_array()['username'];
         $bookTitle = $this->db->get_where('book_data', ['id' => $id])->row_array()['title'];
 
         $userLogAction = [
             'user_id' => $this->session->userdata('id_user'),
-            'action' => 'Admin "' . $usernameAdmin . '" has been deleted book data "' . $bookTitle . '"!',
+            'action' => 'Operator "' . $usernameOperator . '" has been deleted book data "' . $bookTitle . '"!',
         ];
 
         $this->logaction->insertLog($userLogAction);

@@ -145,4 +145,24 @@ class Admin_model extends CI_Model
 
         return $query;
     }
+
+    public function getLogActionByUser($userId)
+    {
+        $query = "SELECT
+            first_name, last_name, username, 
+            avatar_image, role, action
+            FROM user_data AS ud
+            JOIN user_role AS ur
+                ON ud.role_id = ur.id
+            JOIN user_log_action AS ula
+                ON ud.id = ula.user_id
+            WHERE ud.id = $userId
+            ORDER BY ula.created_at DESC
+            LIMIT 5
+        ";
+
+        $result = $this->db->query($query)->result_array();
+
+        return $result;
+    }
 }
