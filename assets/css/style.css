@@ -67,7 +67,6 @@ input[type="number"] {
 	height: 50px !important;
 	margin: auto 0;
 	right: 25px !important;
-	color: #898989 !important;
 }
 
 .carousel-control-prev {
@@ -75,5 +74,4 @@ input[type="number"] {
 	height: 50px !important;
 	margin: auto 0;
 	left: 25px !important;
-	color: #898989 !important;
 }
