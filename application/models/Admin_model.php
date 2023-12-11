@@ -118,12 +118,14 @@ class Admin_model extends CI_Model
     public function getRecentBooks()
     {
         $query = $this->db->query("SELECT
-            bd.id, bd.title, ba.author, bp.publisher, bd.cover_image
+            bd.id, bd.title, ba.author, bp.publisher, bc.category, bd.cover_image
             FROM book_data AS bd
             JOIN book_author AS ba
                 ON bd.author_id = ba.id
             JOIN book_publisher AS bp
                 ON bd.publisher_id = bp.id
+            JOIN book_category AS bc
+                ON bd.category_id = bc.id
             ORDER BY bd.created_at DESC
             LIMIT 3
         ")->result_array();

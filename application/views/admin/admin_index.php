@@ -269,6 +269,7 @@
                                 <h5 class="mb-1"><?= $recent_book['title']; ?></h5>
                                 <h6 class="mb-0">Author: <span class="text-muted"><?= $recent_book['author']; ?></span></h6>
                                 <h6 class="mt-2 mb-0">Publisher: <span class="text-muted"><?= $recent_book['publisher']; ?></span></h6>
+                                <h6 class="mt-2 mb-0">Category: <span class="text-muted"><?= $recent_book['category']; ?></span></h6>
                             </div>
                         </div>
                     <?php endforeach; ?>
