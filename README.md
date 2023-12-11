@@ -1,7 +1,7 @@
-<h1 align="center">Codeigniter 3.1.13 - Boilerplate</h1>
-<p align="center">This repository is a boilerplate from the Codeigniter Framework with version 3.1.13, this boilerplate has features such as authentication (signin and signup), user roles, management menus and submenus, log action</p>
+<h1 align="center">Codeigniter 3.1.13 - E-PERPUS-SOLO</h1>
+<p align="center">An open source Library Management System application with framework CodeIgniter version 3.1.13</p>
 
-<img src="./docs/img/thumbnail/CI3-BOILERPLATE.png" alt="Codeigniter 3.1.13 - Boilerplate">
+<img src="./docs/img/thumbnail/E-PERPUS-SOLO.png" alt="E-PERPUS-SOLO">
 
 # Table of Contents
 
@@ -61,19 +61,19 @@ This boilerplate build with some tech stack, such as:
 - Clone this repository using SSH
 
 ```shell
-git clone git@github.com:armandwipangestu/ci3-boilerplate.git
+git clone git@github.com:armandwipangestu/e-perpus-solo.git
 ```
 
 - Clone this repository using HTTPS
 
 ```shell
-git clone https://github.com/armandwipangestu/ci3-boilerplate.git
+git clone https://github.com/armandwipangestu/e-perpus-solo.git
 ```
 
 ### Create file `.env.development`
 
 ```sh
-cd ci3-boilerplate
+cd e-perpus-solo
 ```
 
 ```sh
@@ -91,17 +91,17 @@ cp .env.example .env.development
 > DB_HOSTNAME=localhost
 > DB_USERNAME=root
 > DB_PASSWORD=
-> DB_NAME=ci3-boilerplate
+> DB_NAME=e_perpus_solo
 > DB_CONNECTION=mysqli
 >
 > # BASE PATH
 > # use localhost
-> BASE_URL=/ci3-boilerplate
-> # use pretty url from laragon, like `ci3-boilerplate.test`
-> #BASE_URL=
+> BASE_URL=/e-perpus-solo
+> # use pretty url from laragon, like `e-perpus-solo.test`
+> # BASE_URL=
 >
 > # APP NAME
-> APP_NAME=CI3-Boilerplate
+> APP_NAME=E-PERPUS-SOLO
 > ```
 
 ### Setup Database
@@ -112,7 +112,7 @@ cp .env.example .env.development
 
   ![Create New Database](./docs/img/setup-database/create_database_gui.png)
 
-- Import `ci3-boilerplate/database/init/with-data/ci3-boilerplate.sql` to the database using phpmyadmin or GUI
+- Import `e-perpus-solo/database/e_perpus_solo.sql` to the database using phpmyadmin or GUI
 
   ![Import Database](./docs/img/setup-database/import_database_gui.png)
 
@@ -121,30 +121,31 @@ cp .env.example .env.development
 - Create a new Database with CLI
 
 ```sql
-CREATE DATABASE ci3_boilerplate;
+CREATE DATABASE e_perpus_solo;
 ```
 
 - Import schema to database using CLI
 
 ```shell
-mysql -u root -p ci3_boilerplate < database/init/with-data/ci3-boilerplate.sql
+mysql -u root -p e_perpus_solo < database/e_perpus_solo.sql
 ```
 
 or if you use powershell terminal, you can run this command:
 
 ```pwsh
-Get-Content 'database\init\with-data\ci3-boilerplate.sql' | mysql -u root -p ci3_boilerplate
+Get-Content 'database\e_perpus_solo.sql' | mysql -u root -p e_perpus_solo
 ```
 
 ## List Default Account Login
 
-| Email             | Username      | Password      | Role          |
-| ----------------- | ------------- | ------------- | ------------- |
-| default@admin.com | administrator | 123qweasdzxc  | Administrator |
-| default@user.com  | user          | 123qweasdzxcz | User          |
+| Email                | Username      | Password      | Role          |
+| -------------------- | ------------- | ------------- | ------------- |
+| default@admin.com    | administrator | 123qweasdzxc  | Administrator |
+| default@operator.com | operator      | 123qweasdzxc  | Operator      |
+| default@user.com     | user          | 123qweasdzxcz | User          |
 
 ## ERD (Entity Relationship Diagram)
 
-You can view this ERD on this link [whimsical.com/ci3-V8Rd3SHVZDQjRKyERyLobu](https://whimsical.com/ci3-V8Rd3SHVZDQjRKyERyLobu)
+You can view this ERD on this link [whimsical.com/erd-sbd-e-perpus-solo-SmsYrg1YNrizCCrQvuZjQf](https://whimsical.com/erd-sbd-e-perpus-solo-SmsYrg1YNrizCCrQvuZjQf)
 
-![CI3 Boilerplate ERD](./docs/img/erd/CI3-BOILERPLATE-ERD.png)
+![E-PERPUS-SOLO ERD](./docs/img/erd/E-PERPUS-SOLO-ERD.png)
